@@ -20,9 +20,11 @@ def compute_entropy_test(target):
     assert np.isclose(target(y), 0.918295, atol=1e-6), "Wrong value. Something between 0 and 1"
     assert np.isclose(target(-y + 1), target(y), atol=1e-6), "Wrong value"
     
-    print("\033[92m All tests passed.")
+    print("\033[92m All tests passed. ")
 
 def split_dataset_test(target):
+
+    # Case 1
     X = np.array([[1, 0], 
          [1, 0], 
          [1, 1], 
@@ -47,6 +49,8 @@ def split_dataset_test(target):
     assert np.allclose(right, expected['right']), f"Wrong value for right. Expected: { expected['right']} \ngot: {right}"
     assert np.allclose(left, expected['left']), f"Wrong value for left. Expected: { expected['left']} \ngot: {left}"
 
+
+    # Case 2
     X = np.array([[0, 1], 
          [1, 1], 
          [1, 1], 
@@ -59,8 +63,13 @@ def split_dataset_test(target):
     expected = {'left': np.array([1, 3]),
                 'right': np.array([0, 2, 4])}
 
+
+    assert len(left) == 2, f"left must have 2 elements but got: {len(left)}" 
+    assert len(right) == 3, f"right must have 3 elements but got: {len(right)}"
     assert np.allclose(right, expected['right']) and np.allclose(left, expected['left']), f"Wrong value when target is at index 0."
-    
+
+
+    # Case 3
     X = (np.random.rand(11, 3) > 0.5) * 1 # Just random binary numbers
     X_t = np.array([[0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0]])
     X = np.concatenate((X, X_t.T), axis=1)
@@ -73,7 +82,7 @@ def split_dataset_test(target):
  
     
     print("\033[92m All tests passed.")
-    
+
 def compute_information_gain_test(target):
     X = np.array([[1, 0], 
          [1, 0], 
@@ -106,7 +115,7 @@ def compute_information_gain_test(target):
     assert np.isclose(result, 0, atol=1e-6), f"Wrong information gain. Expected {0.0} got: {result}"
 
     print("\033[92m All tests passed.")
-    
+
 def get_best_split_test(target):
     X = np.array([[1, 0], 
          [1, 0], 
